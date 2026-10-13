@@ -1,0 +1,13 @@
+{
+  "name": "Maths 4e",
+  "short_name": "Maths",
+  "description": "Réviser le contrôle de maths de 4e : nombres relatifs et démonstrations",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EEF4F2",
+  "theme_color": "#0E8F7E",
+  "lang": "fr",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

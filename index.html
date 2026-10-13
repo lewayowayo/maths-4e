@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maths 4e</title>
+<meta name="description" content="Réviser le contrôle de maths de 4e : nombres relatifs et démonstrations en géométrie, avec exercices infinis et contrôle blanc.">
+<meta name="theme-color" content="#0E8F7E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Maths">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700;800;900&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  --bg:#EEF4F2; --surface:#FFFFFF; --surface2:#F2F7F5; --ink:#15262B; --muted:#5F7479; --line:#D8E4E0;
+  --accent:#0E8F7E; --accent-ink:#FFFFFF; --accent-soft:#D8F0EB;
+  --pop:#FFC53D; --pop-ink:#2A1D00;
+  --ok:#1FA868; --ok-soft:#DCF5E8; --ko:#E8394F; --ko-soft:#FFE0E4; --warm:#F5A400; --warm-soft:#FFF0CF;
+  --geo:#5B4BDB; --geo-soft:#E6E2FF;
+  --shadow:0 10px 30px rgba(21,38,43,.10);
+  --radius:22px; --tabh:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ color-scheme:dark;
+    --bg:#0E1517; --surface:#18232A; --surface2:#1F2D34; --ink:#EEF4F2; --muted:#9BB0B3; --line:#2B3D44;
+    --accent:#2FC1A9; --accent-ink:#06211C; --accent-soft:#163A35;
+    --pop:#FFD166; --pop-ink:#2A1D00;
+    --ok:#3AD38F; --ok-soft:#173A2C; --ko:#FF6B7C; --ko-soft:#48212B; --warm:#FFC24A; --warm-soft:#3F3216;
+    --geo:#9B8CFF; --geo-soft:#2A2550;
+    --shadow:0 10px 30px rgba(0,0,0,.45); }
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;font-weight:600;line-height:1.4;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,.display{font-family:"Lilita One","Nunito",system-ui,sans-serif;font-weight:400;letter-spacing:.01em;margin:0;text-wrap:balance}
+h1{font-size:30px;line-height:1.1} h2{font-size:22px;line-height:1.15} h3{font-size:18px}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+input{font:inherit}
+.muted{color:var(--muted)} .small{font-size:13px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.num{font-variant-numeric:tabular-nums}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 16px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .logo{width:38px;height:38px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:"Lilita One",sans-serif;font-size:19px;box-shadow:var(--shadow)}
+.brand .name{font-family:"Lilita One",sans-serif;font-size:19px;line-height:1}
+.brand .sub{font-size:12px;color:var(--muted);font-weight:700}
+.pills{display:flex;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--surface);box-shadow:var(--shadow);font-weight:900;font-size:14px}
+.pill.streak{color:#C25E00} .pill.streak.hot{background:var(--warm-soft)}
+.pill.xp{background:var(--pop);color:var(--pop-ink)}
+main{flex:1;overflow:auto;padding:8px 16px calc(var(--tabh) + env(safe-area-inset-bottom,0px) + 24px);width:100%;max-width:560px;margin:0 auto}
+.stack{display:flex;flex-direction:column;gap:14px}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-around}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:14px;font-size:11.5px;font-weight:800;color:var(--muted);min-width:64px}
+.tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tab.active{color:var(--accent);background:var(--accent-soft)}
+.card{background:var(--surface);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.card.flat{box-shadow:none;background:var(--surface2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:16px;font-weight:900;font-size:16px;background:var(--surface2);color:var(--ink);transition:transform .08s ease;min-height:50px}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.btn.primary:active{box-shadow:0 2px 0 rgba(0,0,0,.18);transform:translateY(3px)}
+.btn.pop{background:var(--pop);color:var(--pop-ink);box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.btn.pop:active{box-shadow:0 2px 0 rgba(0,0,0,.18);transform:translateY(3px)}
+.btn.ghost{background:transparent;color:var(--muted);min-height:40px;padding:8px 12px}
+.btn.danger{background:var(--ko-soft);color:var(--ko)}
+.btn.block{width:100%} .btn.sm{padding:8px 14px;min-height:38px;font-size:14px;border-radius:12px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.row{display:flex;gap:10px;align-items:center} .row.wrap{flex-wrap:wrap} .row.between{justify-content:space-between} .grow{flex:1}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.ring{width:96px;height:96px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10;stroke-linecap:round}
+.ring .bgc{stroke:var(--surface2)} .ring .fgc{stroke:var(--accent);transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
+.ring .txt{position:absolute;inset:0;display:grid;place-items:center;text-align:center;line-height:1}
+.ring .txt b{font-family:"Lilita One",sans-serif;font-size:26px;display:block}
+.ring .txt span{font-size:11px;color:var(--muted);font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:6px 10px;border-radius:999px;background:var(--surface2);font-size:13px;font-weight:800;border:2px solid transparent}
+.chip.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.chip.ko{background:var(--ko-soft);color:var(--ko)}
+.action{display:flex;align-items:center;gap:14px;padding:16px;border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);text-align:left;width:100%}
+.action .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;flex:none;font-size:22px}
+.action .ico.blue{background:var(--accent-soft);color:var(--accent)} .action .ico.geo{background:var(--geo-soft);color:var(--geo)}
+.action .ico.warm{background:var(--warm-soft);color:#C25E00} .action .ico.red{background:var(--ko-soft);color:var(--ko)}
+.action .t{font-family:"Lilita One",sans-serif;font-size:19px;line-height:1.1}
+.action .d{font-size:13px;color:var(--muted);font-weight:700;margin-top:2px}
+.action .arrow{margin-left:auto;color:var(--muted);font-size:22px}
+.action.primary{background:var(--accent);color:var(--accent-ink)}
+.action.primary .d,.action.primary .arrow{color:inherit;opacity:.8}
+.action.primary .ico{background:rgba(255,255,255,.22);color:inherit}
+.badges{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.badge{flex:none;width:86px;text-align:center;font-size:11px;font-weight:800;color:var(--muted);line-height:1.2}
+.badge .b{width:58px;height:58px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-size:26px;background:var(--surface2);filter:grayscale(1);opacity:.45}
+.badge.got .b{background:var(--warm-soft);filter:none;opacity:1;box-shadow:0 0 0 3px var(--warm)} .badge.got{color:var(--ink)}
+.bar{height:10px;border-radius:999px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .4s ease}
+.bar.pop i{background:var(--pop)}
+/* compétences */
+.skill{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--surface);box-shadow:var(--shadow);width:100%;text-align:left}
+.skill .lv{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:"Lilita One",sans-serif;font-size:17px;flex:none;background:var(--surface2);color:var(--muted)}
+.skill .lv.l1{background:var(--warm-soft);color:#C25E00} .skill .lv.l2{background:var(--accent-soft);color:var(--accent)} .skill .lv.l3{background:var(--accent);color:var(--accent-ink)} .skill .lv.l4{background:var(--pop);color:var(--pop-ink)}
+.skill .n{font-weight:900} .skill .s{font-size:13px;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.skill .dots{margin-left:auto;display:flex;gap:4px;flex:none}
+.skill .dots i{width:9px;height:9px;border-radius:50%;background:var(--line)} .skill .dots i.on{background:var(--accent)} .skill .dots i.gold{background:var(--pop)}
+.sep{display:flex;align-items:center;gap:10px;margin-top:6px}
+.sep .l{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;white-space:nowrap} .sep hr{flex:1;border:0;border-top:1px solid var(--line);margin:0}
+/* question */
+.qcard{background:var(--surface);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow);position:relative}
+.qcard.good{animation:goodpulse .6s ease} .qcard.bad{animation:shake .45s ease}
+@keyframes goodpulse{0%{box-shadow:0 0 0 0 rgba(31,168,104,.6)}100%{box-shadow:0 0 0 22px rgba(31,168,104,0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.qhead{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.skilltag{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:900;background:var(--accent-soft);color:var(--accent)}
+.skilltag.geo{background:var(--geo-soft);color:var(--geo)}
+.prompt{font-size:19px;font-weight:800;margin:10px 0 16px;line-height:1.45}
+.expr{font-family:"Lilita One",sans-serif;font-size:30px;line-height:1.3;letter-spacing:.02em;display:inline-block;margin-top:6px;word-break:break-word}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 4px;line-height:1.1}
+.frac span:first-child{border-bottom:3px solid currentColor;padding:0 8px}
+.frac span:last-child{padding:0 8px}
+.sentence{display:block;margin-top:8px;font-size:18px;line-height:1.7}
+.answerbox{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface2);min-height:58px;margin-bottom:12px}
+.answerbox .label{flex:none}
+.answerbox input{flex:1;border:0;background:transparent;color:var(--ink);font-family:"Lilita One",sans-serif;font-size:30px;min-width:0;text-align:right;outline:none;padding:0}
+.answerbox.ok{border-color:var(--ok);background:var(--ok-soft)} .answerbox.ko{border-color:var(--ko);background:var(--ko-soft)}
+.keypad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.key{padding:13px 0;border-radius:14px;background:var(--surface2);font-family:"Lilita One",sans-serif;font-size:22px;min-height:52px}
+.key:active{transform:scale(.95)}
+.key.op{background:var(--accent-soft);color:var(--accent)} .key.ok{background:var(--accent);color:var(--accent-ink);grid-row:span 2} .key.del{font-size:18px}
+.opts{display:grid;grid-template-columns:1fr;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{padding:14px 14px;border-radius:16px;background:var(--surface2);font-weight:800;font-size:16px;border:3px solid transparent;text-align:left;line-height:1.35;transition:transform .08s}
+.opt.big{font-family:"Lilita One",sans-serif;font-size:22px;text-align:center;font-weight:400}
+.opt:active{transform:scale(.98)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)} .opt.ko{background:var(--ko-soft);border-color:var(--ko);color:var(--ko)} .opt.dim{opacity:.45}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.signs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:"Lilita One",sans-serif;font-size:26px;margin-bottom:14px}
+.signs .term{padding:4px 2px}
+.signs .sg{width:48px;height:48px;border-radius:12px;background:var(--surface2);border:3px dashed var(--line);font-family:"Lilita One",sans-serif;font-size:26px;color:var(--muted)}
+.signs .sg.set{border-style:solid;border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.signs .sg.ok{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)} .signs .sg.ko{border-color:var(--ko);color:var(--ko);background:var(--ko-soft)}
+.blank{display:inline-block;min-width:110px;padding:2px 10px;border-radius:10px;border:3px dashed var(--line);background:var(--surface2);font-weight:900;color:var(--muted);line-height:1.4;vertical-align:baseline;margin:2px 0}
+.blank.active{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.blank.set{border-style:solid;border-color:var(--accent);color:var(--ink)}
+.blank.ok{border-style:solid;border-color:var(--ok);color:var(--ok);background:var(--ok-soft)} .blank.ko{border-style:solid;border-color:var(--ko);color:var(--ko);background:var(--ko-soft);text-decoration:line-through}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.word{padding:9px 14px;border-radius:12px;background:var(--surface2);font-weight:900;border:2px solid var(--line)}
+.word.used{opacity:.35}
+.olist{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.oline{padding:12px 14px;border-radius:14px;background:var(--surface2);font-weight:700;text-align:left;border:3px solid transparent;display:flex;gap:10px;align-items:flex-start;line-height:1.4}
+.oline .k{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:"Lilita One",sans-serif;font-size:14px;flex:none}
+.oline.pool .k{background:var(--line);color:var(--muted)}
+.oline.ok{border-color:var(--ok);background:var(--ok-soft)} .oline.ko{border-color:var(--ko);background:var(--ko-soft)}
+.oslot{min-height:46px;border-radius:14px;border:3px dashed var(--line);display:flex;align-items:center;padding:0 14px;color:var(--muted);font-size:14px}
+.feedback{margin-top:14px;padding:14px;border-radius:16px}
+.feedback.ok{background:var(--ok-soft);color:var(--ok)} .feedback.ko{background:var(--ko-soft);color:var(--ko)}
+.feedback .big{font-family:"Lilita One",sans-serif;font-size:22px}
+.explain{margin-top:8px;padding:12px 14px;border-radius:14px;background:var(--surface2);color:var(--ink);font-size:15px;line-height:1.5}
+.explain b{color:var(--accent)}
+.fig{display:flex;justify-content:center;margin:4px 0 12px}
+.fig svg{width:100%;max-width:300px;height:auto;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fig svg text{fill:var(--ink);stroke:none;font-family:"Nunito",sans-serif;font-weight:800;font-size:13px;font-style:italic}
+.fig svg .dash{stroke-dasharray:5 5} .fig svg .hl{stroke:var(--accent)} .fig svg .thin{stroke-width:1.5}
+.lesson h3{color:var(--accent);margin-bottom:8px}
+.lesson .rule{padding:12px 14px;border-radius:14px;background:var(--accent-soft);margin:8px 0;line-height:1.5}
+.lesson .rule.geo{background:var(--geo-soft)}
+.lesson .ex{font-family:"Lilita One",sans-serif;font-size:19px;letter-spacing:.02em;margin:4px 0;line-height:1.4}
+.lesson ul{margin:6px 0;padding-left:20px} .lesson li{margin:3px 0}
+.lesson table{width:100%;border-collapse:collapse;font-size:15px} .lesson td{padding:6px 8px;border-bottom:1px solid var(--line)}
+.score{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0}
+.score .big{font-family:"Lilita One",sans-serif;font-size:64px;line-height:1} .score .big small{font-size:28px;color:var(--muted)}
+.hist{display:flex;gap:8px;flex-wrap:wrap}
+.hist .h{padding:8px 12px;border-radius:12px;background:var(--surface2);font-size:13px;font-weight:800;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.hist .h b{font-family:"Lilita One",sans-serif;font-size:18px;font-weight:400}
+.hist .h.good{background:var(--ok-soft);color:var(--ok)} .hist .h.bad{background:var(--ko-soft);color:var(--ko)}
+.corr{display:flex;flex-direction:column;gap:10px}
+.corr .c{padding:12px 14px;border-radius:14px;background:var(--surface2);border-left:5px solid var(--ok)}
+.corr .c.ko{border-left-color:var(--ko)}
+.corr .c .q{font-weight:800;margin-bottom:4px} .corr .c .q .expr{font-size:20px;margin:0}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 70px);transform:translateX(-50%) translateY(-20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:999px;font-weight:900;opacity:0;transition:all .3s;z-index:20;pointer-events:none;box-shadow:var(--shadow);max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:30}
+.xpfloat{position:fixed;left:50%;transform:translateX(-50%);color:var(--ok);font-family:"Lilita One",sans-serif;font-size:26px;z-index:25;pointer-events:none;animation:floatup 1s ease forwards}
+@keyframes floatup{0%{opacity:0;transform:translate(-50%,10px)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-60px)}}
+.confirm{background:var(--warm-soft);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--ink)}
+.switch{width:52px;height:30px;border-radius:999px;background:var(--line);position:relative;transition:background .2s;flex:none}
+.switch i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.switch.on{background:var(--ok)} .switch.on i{left:25px}
+.srow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)} .srow:first-child{border-top:0}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:380px){.expr{font-size:26px}.answerbox input{font-size:26px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo">∑</div>
+    <div><div class="name">Maths 4e</div><div class="sub">Relatifs &amp; démonstrations</div></div>
+  </div>
+  <div class="pills">
+    <div class="pill streak" id="pillStreak" title="Jours d'affilée">🔥 <span class="num">0</span></div>
+    <div class="pill xp" id="pillXp" title="Points d'expérience">★ <span class="num">0</span></div>
+  </div>
+</header>
+<main id="view" aria-live="polite"></main>
+<nav class="tabs" id="tabs">
+  <button class="tab" data-go="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
+  <button class="tab" data-go="lessons"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Leçons</button>
+  <button class="tab" data-go="train"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Entraîner</button>
+  <button class="tab" data-go="test"><svg viewBox="0 0 24 24"><path d="M9 3h6l1 2h3v16H5V5h3z"/><path d="M9 12l2 2 4-4"/></svg>Contrôle</button>
+</nav>
+<div class="toast" id="toast"></div>
+<canvas id="confetti" hidden></canvas>
+
+<script src="engine.js"></script>
+<script>
+const E = window.Engine;
+const { SKILLS, skillById, generate, checkAnswer, correctText, fmt, esc, shuffle, pick, rnd } = E;
+const LEVEL_NAMES = ["Pas commencé", "Découvert", "En route", "Solide", "Maîtrisé"];
+const ROW_NEEDED = 3;          // bonnes réponses d'affilée pour monter d'un niveau
+const REVIEW_DAYS = [0, 1, 2, 4, 8];
+const BADGES = [
+  { id: "first", icon: "⚡", name: "Première session", test: s => s.sessions >= 1 },
+  { id: "streak3", icon: "🔥", name: "3 jours d'affilée", test: s => s.streak.count >= 3 },
+  { id: "streak7", icon: "🌋", name: "7 jours d'affilée", test: s => s.streak.count >= 7 },
+  { id: "test1", icon: "📝", name: "Premier contrôle blanc", test: s => s.tests.length >= 1 },
+  { id: "test16", icon: "🎯", name: "16/20 au contrôle", test: s => s.tests.some(t => t.score >= 16) },
+  { id: "test20", icon: "🏆", name: "20/20 au contrôle", test: s => s.tests.some(t => t.score === 20) },
+  { id: "m5", icon: "🚀", name: "5 compétences maîtrisées", test: s => mastered(s) >= 5 },
+  { id: "m10", icon: "💎", name: "10 compétences maîtrisées", test: s => mastered(s) >= 10 },
+  { id: "mall", icon: "👑", name: "Tout est maîtrisé", test: s => mastered(s) >= SKILLS.length },
+  { id: "xp1000", icon: "⭐", name: "1000 XP", test: s => s.xp >= 1000 },
+];
+const LEVELS = ["Débutant", "Apprenti", "Élève sérieux", "Confirmé", "Expert", "Maître des maths", "Légende"];
+
+/* ===== état ===== */
+const KEY = "maths4e-v1";
+const DEFAULT = { skills: {}, xp: 0, streak: { count: 0, last: "" }, sessions: 0, tests: [], badges: [], sound: true, today: { day: "", sessions: 0 } };
+let S = load();
+function load() { try { const raw = localStorage.getItem(KEY); if (raw) { const o = JSON.parse(raw); return { ...DEFAULT, ...o, streak: { ...DEFAULT.streak, ...(o.streak || {}) }, today: { ...DEFAULT.today, ...(o.today || {}) } }; } } catch (e) { } return JSON.parse(JSON.stringify(DEFAULT)); }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { } }
+function sk(id) { return S.skills[id] || (S.skills[id] = { lvl: 0, row: 0, ok: 0, ko: 0, due: 0, seen: 0 }); }
+function mastered(s) { s = s || S; return SKILLS.filter(x => s.skills[x.id] && s.skills[x.id].lvl >= 4).length; }
+function todayStr() { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function dayDiff(a, b) { return Math.round((new Date(b) - new Date(a)) / 86400000); }
+function level() { return Math.min(LEVELS.length - 1, Math.floor(Math.sqrt(S.xp / 60))); }
+function levelXp(l) { return l * l * 60; }
+function dueSkills() { const now = Date.now(); return SKILLS.filter(x => { const c = S.skills[x.id]; return c && c.lvl >= 4 && c.due <= now; }); }
+function weakSkills() { return SKILLS.map(x => ({ x, c: sk(x.id) })).filter(o => o.c.lvl < 4).sort((a, b) => (a.c.lvl - b.c.lvl) || ((b.c.ko - b.c.ok) - (a.c.ko - a.c.ok))).map(o => o.x); }
+
+/* ===== utils ===== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+let audioCtx = null;
+function beep(good) { if (!S.sound) return; try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); const t = audioCtx.currentTime; const notes = good ? [[660, 0], [880, .09]] : [[220, 0], [180, .12]]; notes.forEach(([f, d]) => { const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.type = good ? "triangle" : "square"; o.frequency.value = f; g.gain.setValueAtTime(0.0001, t + d); g.gain.exponentialRampToValueAtTime(good ? .25 : .15, t + d + .01); g.gain.exponentialRampToValueAtTime(0.0001, t + d + (good ? .18 : .22)); o.connect(g).connect(audioCtx.destination); o.start(t + d); o.stop(t + d + .3); }); } catch (e) { } }
+let toastT = null;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200); }
+function floatXp(n) { const d = document.createElement("div"); d.className = "xpfloat"; d.style.top = (window.innerHeight * 0.45) + "px"; d.textContent = "+" + n + " XP"; document.body.appendChild(d); setTimeout(() => d.remove(), 1000); }
+function addXp(n, silent) { S.xp += n; renderPills(); if (!silent) floatXp(n); }
+function confetti() { const c = $("#confetti"); c.hidden = false; const ctx = c.getContext("2d"); c.width = innerWidth; c.height = innerHeight; const cols = ["#0E8F7E", "#FFC53D", "#5B4BDB", "#E0368C", "#0FA3B1", "#fff"]; const ps = Array.from({ length: 140 }, () => ({ x: Math.random() * c.width, y: -20 - Math.random() * c.height * .5, vx: (Math.random() - .5) * 3, vy: 2 + Math.random() * 4, r: 4 + Math.random() * 5, c: pick(cols), a: Math.random() * 6.28, va: (Math.random() - .5) * .3 })); const t0 = performance.now(); (function frame(t) { ctx.clearRect(0, 0, c.width, c.height); let alive = false; ps.forEach(p => { p.x += p.vx; p.y += p.vy; p.a += p.va; p.vy += .03; if (p.y < c.height + 20) alive = true; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6); ctx.restore(); }); if (alive && t - t0 < 3500) requestAnimationFrame(frame); else c.hidden = true; })(t0); }
+function checkBadges() { const got = []; BADGES.forEach(b => { if (!S.badges.includes(b.id) && b.test(S)) { S.badges.push(b.id); got.push(b); } }); if (got.length) { save(); setTimeout(() => toast(got[0].icon + " Badge : " + got[0].name), 600); } }
+function touchStreak() { const t = todayStr(); if (S.streak.last !== t) { S.streak.count = (S.streak.last && dayDiff(S.streak.last, t) === 1) ? S.streak.count + 1 : 1; S.streak.last = t; } if (S.today.day !== t) S.today = { day: t, sessions: 0 }; S.today.sessions++; }
+function renderPills() { const t = todayStr(); const alive = S.streak.last === t || (S.streak.last && dayDiff(S.streak.last, t) === 1); $("#pillStreak span").textContent = alive ? S.streak.count : 0; $("#pillStreak").classList.toggle("hot", S.streak.last === t); $("#pillXp span").textContent = S.xp; }
+
+/* ===== figures SVG ===== */
+const FIG = {
+  D1: `<svg viewBox="0 0 300 150"><path d="M20 100 H280"/><path d="M90 20 V140 M210 20 V140" class="hl"/><path d="M90 100 h12 v-12 h-12 M210 100 h12 v-12 h-12" class="thin"/><text x="266" y="92">d</text><text x="70" y="36">d₁</text><text x="216" y="36">d₂</text></svg>`,
+  D2: `<svg viewBox="0 0 300 150"><path d="M30 130 L200 20" class="hl"/><path d="M90 140 L260 30"/><path d="M150 145 L300 50" class="hl"/><text x="200" y="18">d₁</text><text x="262" y="30">d</text><text x="285" y="62">d₂</text></svg>`,
+  D3: `<svg viewBox="0 0 300 150"><path d="M20 45 H280 M20 115 H280"/><path d="M150 10 V145" class="hl"/><path d="M150 45 h12 v-12 h-12" class="thin"/><text x="266" y="38">d</text><text x="266" y="108">d′</text><text x="158" y="140">Δ</text><text x="162" y="108">?</text></svg>`,
+  MD: `<svg viewBox="0 0 300 150"><path d="M40 90 H260"/><path d="M150 15 V140" class="hl"/><path d="M150 90 h12 v-12 h-12" class="thin"/><path d="M92 82 l6 16 M202 82 l6 16" class="thin"/><circle cx="40" cy="90" r="2.5" fill="currentColor"/><circle cx="260" cy="90" r="2.5" fill="currentColor"/><text x="28" y="112">A</text><text x="254" y="112">B</text><text x="158" y="30">médiatrice</text></svg>`,
+  M1: `<svg viewBox="0 0 300 160"><path d="M40 120 H260"/><path d="M150 15 V150" class="hl"/><path d="M150 120 h12 v-12 h-12" class="thin"/><path d="M92 112 l6 16 M202 112 l6 16" class="thin"/><path d="M40 120 L150 40 L260 120" class="dash"/><path d="M90 76 l10 8 M94 72 l10 8 M200 84 l10 -8 M204 88 l10 -8" class="thin"/><circle cx="150" cy="40" r="3" fill="currentColor"/><text x="28" y="142">A</text><text x="254" y="142">B</text><text x="158" y="38">M</text></svg>`,
+  P1: `<svg viewBox="0 0 300 150"><path d="M60 120 L220 120 L260 30 L100 30 Z"/><path d="M134 120 l8 -6 M142 120 l8 -6 M174 30 l8 -6 M182 30 l8 -6" class="thin"/><path d="M78 76 l9 -2 M74 86 l9 -2 M238 76 l9 -2 M234 86 l9 -2" class="thin"/><text x="46" y="140">A</text><text x="222" y="140">B</text><text x="264" y="28">C</text><text x="84" y="28">D</text></svg>`,
+  P3: `<svg viewBox="0 0 300 150"><path d="M60 120 L220 120 L260 30 L100 30 Z"/><path d="M60 120 L260 30 M220 120 L100 30" class="dash"/><circle cx="160" cy="75" r="3" fill="currentColor"/><path d="M106 100 l8 2 M214 50 l8 2 M126 102 l6 -8 M194 48 l6 -8" class="thin"/><text x="46" y="140">A</text><text x="222" y="140">B</text><text x="264" y="28">C</text><text x="84" y="28">D</text><text x="166" y="70">O</text></svg>`,
+  P5: `<svg viewBox="0 0 300 150"><path d="M60 120 L220 120 L260 30 L100 30 Z"/><path d="M140 112 v16 M180 22 v16" class="thin"/><path d="M74 72 l12 6 M78 66 l12 6 M234 72 l12 6 M238 66 l12 6" class="thin"/><text x="46" y="140">A</text><text x="222" y="140">B</text><text x="264" y="28">C</text><text x="84" y="28">D</text></svg>`,
+};
+const fig = k => FIG[k] ? `<div class="fig">${FIG[k]}</div>` : "";
+
+/* ===== leçons ===== */
+const LESSONS = [
+  { id: "add", part: 1, title: "Addition et soustraction de relatifs", skills: ["add_same", "add_diff", "sub"], html: `
+    <div class="rule"><b>Même signe</b> : on garde le signe commun et on <b>additionne</b> les distances à zéro.</div>
+    <div class="ex">−3 + (−4) = −7 &nbsp;·&nbsp; 4 + (+9) = 13 &nbsp;·&nbsp; −2,5 + (−4,3) = −6,8</div>
+    <div class="rule"><b>Signes contraires</b> : on repère celui qui a la plus grande distance à zéro, on prend <b>son signe</b>, et on <b>soustrait</b> les distances à zéro.</div>
+    <div class="ex">−8 + 5 = −3 &nbsp;·&nbsp; −3,1 + 7,4 = 4,3 &nbsp;·&nbsp; 2,1 + (−5,3) = −3,2</div>
+    <div class="rule"><b>Soustraire, c'est ajouter l'opposé.</b></div>
+    <div class="ex">4 − (−6) = 4 + 6 = 10 &nbsp;·&nbsp; −3 − 2,5 = −3 + (−2,5) = −5,5 &nbsp;·&nbsp; −7,5 − (−3) = −7,5 + 3 = −4,5</div>` },
+  { id: "simp", part: 1, title: "Simplification d'écriture et somme algébrique", skills: ["simplify", "algsum"], html: `
+    <div class="rule">On peut écrire plus simplement une somme ou une différence de relatifs :
+    <table><tr><td>a + (+2) = a + 2</td><td>« + suivi de + donne + »</td></tr><tr><td>a − (−2) = a + 2</td><td>« − suivi de − donne + »</td></tr><tr><td>a − (+2) = a − 2</td><td>« − suivi de + donne − »</td></tr><tr><td>a + (−2) = a − 2</td><td>« + suivi de − donne − »</td></tr></table></div>
+    <div class="ex">12 − (+9) − (−16) + 9 + (−17) + (+12) − (24)<br>= 12 − 9 + 16 + 9 − 17 + 12 − 24</div>
+    <div class="rule"><b>Calcul astucieux</b> : on repère les opposés qui s'annulent (−9 et +9), puis on regroupe les positifs ensemble et les négatifs ensemble.</div>
+    <div class="ex">12 + 16 + 12 = 40 ; −17 − 24 = −41 ; 40 − 41 = −1</div>` },
+  { id: "mul", part: 1, title: "Multiplication et division de relatifs", skills: ["sign", "mul", "mul_many", "div", "opp"], html: `
+    <div class="rule">Pour multiplier (ou diviser) deux relatifs : on multiplie (divise) les <b>distances à zéro</b> et on applique la <b>règle des signes</b> :<ul><li>même signe → résultat <b>positif</b></li><li>signes contraires → résultat <b>négatif</b></li></ul></div>
+    <div class="ex">−3 × (−4) = 12 &nbsp;·&nbsp; −3 × 4 = −12 &nbsp;·&nbsp; −8 ÷ (−2) = 4 &nbsp;·&nbsp; −7 ÷ 2 = −3,5</div>
+    <div class="rule"><b>Plusieurs facteurs</b> : on compte le nombre de facteurs négatifs. S'il est <b>pair</b>, le produit est positif ; s'il est <b>impair</b>, le produit est négatif.</div>
+    <div class="ex">−5 × 2 × (−3) × (−4) = −120 (3 négatifs)<br>−2,5 × (−9) × 4 = 2,5 × 4 × 9 = 90</div>
+    <div class="rule"><b>Multiplier par −1</b> donne l'opposé : −1 × a = −a.</div>
+    <div class="ex">−1 × 5 = −5 &nbsp;·&nbsp; −1 × (−5) = 5</div>` },
+  { id: "props", part: 2, title: "Propriétés : droites, médiatrice, parallélogramme", skills: ["prop_blank", "prop_conclude", "prop_which"], html: `
+    <p class="small muted">C'est la « boîte à outils » pour chercher des démonstrations. Les données des figures sont codées.</p>
+    <h3>Droites</h3>
+    <div class="rule geo"><b>D1</b> · Si deux droites sont perpendiculaires à une même troisième alors elles sont parallèles entre elles.</div>${fig("D1")}
+    <div class="rule geo"><b>D2</b> · Si deux droites sont parallèles à une même troisième alors elles sont parallèles entre elles.</div>${fig("D2")}
+    <div class="rule geo"><b>D3</b> · Si deux droites sont parallèles et si une troisième est perpendiculaire à l'une alors elle est perpendiculaire à l'autre.</div>${fig("D3")}
+    <h3>Médiatrice</h3>
+    <div class="rule geo"><b>Définition</b> · La médiatrice d'un segment est la droite perpendiculaire à ce segment en son milieu.</div>${fig("MD")}
+    <div class="rule geo"><b>M1</b> · Si un point appartient à la médiatrice d'un segment alors il est équidistant des extrémités de ce segment.</div>
+    <div class="rule geo"><b>M2</b> · Si un point est équidistant des extrémités d'un segment alors il appartient à la médiatrice de ce segment.</div>${fig("M1")}
+    <h3>Parallélogramme</h3>
+    <div class="rule geo"><b>Définition</b> · Un parallélogramme est un quadrilatère dont les côtés opposés sont parallèles.</div>
+    <div class="rule geo"><b>P1</b> · Si un quadrilatère est un parallélogramme alors ses côtés opposés sont parallèles.</div>
+    <div class="rule geo"><b>P2</b> · Si un quadrilatère a ses côtés opposés parallèles alors c'est un parallélogramme.</div>${fig("P1")}
+    <div class="rule geo"><b>P3</b> · Si un quadrilatère est un parallélogramme alors ses diagonales ont le même milieu.</div>
+    <div class="rule geo"><b>P4</b> · Si un quadrilatère a ses diagonales qui ont le même milieu alors c'est un parallélogramme.</div>${fig("P3")}
+    <div class="rule geo"><b>P5</b> · Si un quadrilatère est un parallélogramme alors ses côtés opposés sont de même longueur.</div>
+    <div class="rule geo"><b>P6</b> · Si un quadrilatère (non croisé) a ses côtés opposés de même longueur alors c'est un parallélogramme.</div>${fig("P5")}` },
+  { id: "recip", part: 2, title: "Propriété et réciproque", skills: ["reciprocal"], html: `
+    <div class="rule geo">Une propriété a la forme « <b>Si</b> condition (hypothèse) <b>alors</b> conclusion ».</div>
+    <div class="rule geo">La <b>réciproque</b> s'obtient en <b>échangeant</b> la condition et la conclusion. On ne nie rien !</div>
+    <p>Si ABCD est un parallélogramme alors ses diagonales se coupent en leur milieu. <span class="muted">(vrai)</span><br>Réciproque : si les diagonales de ABCD se coupent en leur milieu alors ABCD est un parallélogramme. <span class="muted">(vrai aussi)</span></p>
+    <div class="rule geo"><b>Un énoncé vrai peut avoir une réciproque fausse !</b></div>
+    <ul><li>Si Franck est français alors il est européen. <span class="muted">vrai</span> — Réciproque : s'il est européen alors il est français. <span class="muted">faux</span></li>
+    <li>Si M est le milieu de [AB] alors MA = MB. <span class="muted">vrai</span> — Réciproque : si MA = MB alors M est le milieu de [AB]. <span class="muted">faux</span> (M peut être sur la médiatrice)</li>
+    <li>Si M ∈ [AB] alors M ∈ (AB). <span class="muted">vrai</span> — Réciproque : <span class="muted">faux</span></li></ul>` },
+  { id: "demo", part: 2, title: "Ma première démonstration", skills: ["notation", "demo_order", "demo_build"], html: `
+    <div class="rule geo">Une <b>démonstration</b> est un raisonnement qui permet, à partir des données de l'énoncé (les <b>hypothèses</b>), d'en déduire ce qui est demandé (la <b>conclusion</b>). Elle utilise des <b>propriétés</b>.</div>
+    <div class="rule geo">On commence par une <b>figure codée</b> : on ne code que les <b>données</b>. Ce qu'on devine en regardant la figure est une <b>conjecture</b> ; pour le prouver il faut une démonstration, qu'il faut bien <b>rédiger</b>.</div>
+    <h3>Rédaction en 3 temps</h3>
+    <div class="rule geo"><b>On sait que</b> … (les données)<br><b>Si</b> … <b>alors</b> … (la propriété)<br><b>Donc</b> … (la conclusion)</div>
+    <p><b>Exemple</b> (ABCD parallélogramme, d ⊥ (AB) passant par A, montrer que d ⊥ (CD)) :</p>
+    <p>• On sait que ABCD est un parallélogramme.<br>Si un quadrilatère est un parallélogramme alors ses côtés opposés sont parallèles.<br>Donc (AB) // (DC).</p>
+    <p>• On sait que (AB) // (DC) et d ⊥ (AB).<br>Si deux droites sont parallèles et si une troisième est perpendiculaire à l'une alors elle est perpendiculaire à l'autre.<br>Donc d ⊥ (CD).</p>
+    <h3>Notations</h3>
+    <table><tr><td><b>[AB]</b></td><td>le segment d'extrémités A et B</td></tr><tr><td><b>(AB)</b></td><td>la droite passant par A et B</td></tr><tr><td><b>AB</b></td><td>la longueur du segment [AB]</td></tr><tr><td><b>d ⊥ (AB)</b></td><td>d est perpendiculaire à (AB)</td></tr><tr><td><b>(AB) // (CD)</b></td><td>(AB) et (CD) sont parallèles</td></tr><tr><td><b>M ∈ (AB)</b></td><td>M appartient à la droite (AB)</td></tr></table>` },
+];
+
+/* ===== routeur ===== */
+let screen = "home";
+function go(name, arg) { if (session && session.active && name !== "question") { if (!confirmQuit(() => go(name, arg))) return; } screen = name; $$(".tab").forEach(t => t.classList.toggle("active", t.dataset.go === name)); window.scrollTo(0, 0); $("#view").scrollTop = 0; ({ home: renderHome, lessons: renderLessons, train: renderTrain, test: renderTestStart, settings: renderSettings })[name](arg); }
+$("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) go(b.dataset.go); });
+
+/* ===== accueil ===== */
+function renderHome() {
+  const m = mastered(); const pct = Math.round(m / SKILLS.length * 100); const circ = 2 * Math.PI * 42;
+  const due = dueSkills(); const weak = weakSkills();
+  const lastT = S.tests[S.tests.length - 1];
+  const t = todayStr(); const doneToday = S.today.day === t && S.today.sessions > 0;
+  const lv = level(); const nextXp = levelXp(lv + 1), prevXp = levelXp(lv); const lp = Math.min(100, Math.round((S.xp - prevXp) / (nextXp - prevXp) * 100));
+  const hour = new Date().getHours(); const hello = hour < 12 ? "Bonjour" : hour < 18 ? "Salut" : "Bonsoir";
+  const p1 = SKILLS.filter(x => x.part === 1), p2 = SKILLS.filter(x => x.part === 2);
+  const avg = arr => Math.round(arr.reduce((s, x) => s + sk(x.id).lvl, 0) / (arr.length * 4) * 100);
+  $("#view").innerHTML = `<div class="stack">
+    <div class="card hero">
+      <div class="ring"><svg viewBox="0 0 100 100"><circle class="bgc" cx="50" cy="50" r="42"/><circle class="fgc" cx="50" cy="50" r="42" stroke-dasharray="${circ}" stroke-dashoffset="${circ * (1 - m / SKILLS.length)}"/></svg><div class="txt"><b class="num">${pct}%</b><span>maîtrisé</span></div></div>
+      <div class="stack" style="gap:8px"><h1>${hello} !</h1>
+        <p class="small muted"><b class="num">${m}</b> / ${SKILLS.length} compétences maîtrisées.</p>
+        <div><div class="row between small"><span class="muted">${LEVELS[lv]}</span><span class="muted num">${S.xp} / ${nextXp} XP</span></div><div class="bar pop"><i style="width:${lp}%"></i></div></div>
+      </div>
+    </div>
+    <div class="card flat"><div class="row between small" style="margin-bottom:6px"><b>Partie 1 · Nombres relatifs</b><span class="muted num">${avg(p1)}%</span></div><div class="bar"><i style="width:${avg(p1)}%"></i></div>
+      <div class="row between small" style="margin:10px 0 6px"><b>Partie 2 · Géométrie</b><span class="muted num">${avg(p2)}%</span></div><div class="bar"><i style="width:${avg(p2)}%;background:var(--geo)"></i></div></div>
+    ${doneToday ? `<div class="card flat row" style="gap:12px"><span style="font-size:24px">✅</span><div><b>Objectif du jour atteint</b><div class="small muted">Série 🔥 ${S.streak.count} jour${S.streak.count > 1 ? "s" : ""}. Une session de plus, c'est bonus.</div></div></div>`
+      : `<div class="card flat row" style="gap:12px"><span style="font-size:24px">🎯</span><div><b>Objectif du jour : 1 parcours</b><div class="small muted">${S.streak.count > 0 && S.streak.last && dayDiff(S.streak.last, t) === 1 ? "Révise aujourd'hui pour garder ta série 🔥 " + S.streak.count + " !" : "12 questions, environ 8 minutes."}</div></div></div>`}
+    <button class="action primary" data-act="daily"><div class="ico">⚡</div><div><div class="t">Parcours du jour</div><div class="d">${due.length ? due.length + " compétence" + (due.length > 1 ? "s" : "") + " à réviser · " : ""}on travaille ${weak.slice(0, 3).map(x => x.name.toLowerCase()).join(", ") || "un mélange de tout"}</div></div><span class="arrow">›</span></button>
+    <button class="action" data-act="train"><div class="ico blue">🧩</div><div><div class="t">Entraîner une compétence</div><div class="d">Choisis ce que tu veux travailler</div></div><span class="arrow">›</span></button>
+    <button class="action" data-act="test"><div class="ico warm">📝</div><div><div class="t">Contrôle blanc</div><div class="d">20 questions, note sur 20${lastT ? " · dernier : " + lastT.score + "/20" : ""}</div></div><span class="arrow">›</span></button>
+    <button class="action" data-act="lessons"><div class="ico geo">📖</div><div><div class="t">Relire les leçons</div><div class="d">Les règles du cahier, en version courte</div></div><span class="arrow">›</span></button>
+    <div class="card"><h3 style="margin-bottom:10px">Badges</h3><div class="badges">${BADGES.map(b => `<div class="badge ${S.badges.includes(b.id) ? "got" : ""}"><div class="b">${b.icon}</div>${esc(b.name)}</div>`).join("")}</div></div>
+    <button class="btn ghost block" data-act="settings">Réglages</button>
+  </div>`;
+  $("#view").onclick = e => { const b = e.target.closest("[data-act]"); if (!b) return; const a = b.dataset.act; $("#view").onclick = null; if (a === "daily") startSession("daily"); else go(a); };
+}
+
+/* ===== réglages ===== */
+function renderSettings() {
+  const v = $("#view");
+  const draw = () => { v.innerHTML = `<div class="stack">
+    <div class="row"><button class="btn ghost" data-act="back">‹ Retour</button><h2>Réglages</h2></div>
+    <div class="card"><div class="srow"><div><b>Sons</b><div class="small muted">Petit signal quand tu réponds.</div></div><button class="switch ${S.sound ? "on" : ""}" data-act="sound" role="switch" aria-checked="${S.sound}"><i></i></button></div></div>
+    <div class="card"><h3>Comment ça marche</h3><p class="small muted" style="margin-top:6px">Chaque compétence monte d'un niveau après ${ROW_NEEDED} bonnes réponses d'affilée, et redescend d'un cran à chaque erreur. Au niveau 4 (maîtrisé), elle revient en révision après 1, 2, 4 puis 8 jours. Les questions deviennent plus difficiles avec le niveau. Après une erreur, la correction s'affiche et une question du même type revient un peu plus loin.</p></div>
+    <div class="card"><div class="srow"><div><b>Remettre à zéro</b><div class="small muted">Efface la progression, les XP et les badges.</div></div><button class="btn sm danger" data-act="reset">Effacer</button></div><div id="resetBox"></div></div>
+  </div>`; };
+  draw();
+  v.onclick = e => { const b = e.target.closest("[data-act]"); if (!b) return; const a = b.dataset.act;
+    if (a === "back") { v.onclick = null; go("home"); }
+    else if (a === "sound") { S.sound = !S.sound; save(); draw(); if (S.sound) beep(true); }
+    else if (a === "reset") { $("#resetBox").innerHTML = `<div class="confirm">Tout effacer, vraiment ? Impossible de revenir en arrière.<div class="row"><button class="btn sm danger" data-act="resetok">Oui, tout effacer</button><button class="btn sm" data-act="cancel">Annuler</button></div></div>`; }
+    else if (a === "resetok") { S = JSON.parse(JSON.stringify(DEFAULT)); save(); renderPills(); toast("Progression effacée"); draw(); }
+    else if (a === "cancel") draw(); };
+}
+
+/* ===== leçons ===== */
+function renderLessons(openId) {
+  const v = $("#view"); let open = openId || null;
+  const draw = () => {
+    v.innerHTML = `<div class="stack"><div><h2>Leçons</h2><p class="small muted">Les règles du cahier, à relire avant de s'entraîner.</p></div>
+      ${[1, 2].map(part => `<div class="sep"><span class="l">${part === 1 ? "Partie 1 · Nombres relatifs" : "Partie 2 · Géométrie"}</span><hr></div>` + LESSONS.filter(l => l.part === part).map(l => `<div class="card lesson" style="padding:${open === l.id ? "18px" : "4px 18px"}"><button class="row between" style="width:100%;text-align:left;padding:12px 0" data-open="${l.id}"><h3 style="color:${part === 1 ? "var(--accent)" : "var(--geo)"}">${esc(l.title)}</h3><span class="muted">${open === l.id ? "▲" : "▼"}</span></button>${open === l.id ? `<div>${l.html}</div><div class="chips" style="margin-top:12px">${l.skills.map(id => `<button class="chip on" data-skill="${id}">⚡ ${esc(skillById(id).name)}</button>`).join("")}</div>` : ""}</div>`).join("")).join("")}
+    </div>`;
+  };
+  draw();
+  v.onclick = e => { const o = e.target.closest("[data-open]"); if (o) { open = open === o.dataset.open ? null : o.dataset.open; draw(); if (open) { const el = $(`[data-open="${open}"]`, v); if (el) el.scrollIntoView({ block: "start", behavior: "smooth" }); } return; } const s = e.target.closest("[data-skill]"); if (s) { v.onclick = null; startSession("skill", s.dataset.skill); } };
+}
+
+/* ===== entraînement : liste des compétences ===== */
+function renderTrain() {
+  const v = $("#view");
+  const row = x => { const c = sk(x.id); return `<button class="skill" data-skill="${x.id}"><div class="lv l${c.lvl}">${c.lvl >= 4 ? "★" : c.lvl}</div><div><div class="n">${esc(x.name)}</div><div class="s">${esc(x.short)} · ${LEVEL_NAMES[c.lvl]}${c.lvl < 4 && c.row > 0 ? " · " + c.row + "/" + ROW_NEEDED : ""}</div></div><div class="dots">${[1, 2, 3, 4].map(k => `<i class="${c.lvl >= k ? (k === 4 ? "gold" : "on") : ""}"></i>`).join("")}</div></button>`; };
+  v.innerHTML = `<div class="stack"><div><h2>Entraîner</h2><p class="small muted">Chaque compétence monte d'un niveau après ${ROW_NEEDED} bonnes réponses d'affilée. Niveau 4 = maîtrisé ★.</p></div>
+    <button class="action primary" data-act="daily"><div class="ico">⚡</div><div><div class="t">Parcours du jour</div><div class="d">12 questions mélangées, adaptées à ton niveau</div></div><span class="arrow">›</span></button>
+    <div class="sep"><span class="l">Partie 1 · Nombres relatifs</span><hr></div>${SKILLS.filter(x => x.part === 1).map(row).join("")}
+    <div class="sep"><span class="l">Partie 2 · Géométrie</span><hr></div>${SKILLS.filter(x => x.part === 2).map(row).join("")}
+  </div>`;
+  v.onclick = e => { const d = e.target.closest("[data-act=daily]"); if (d) { v.onclick = null; startSession("daily"); return; } const b = e.target.closest("[data-skill]"); if (b) { v.onclick = null; startSession("skill", b.dataset.skill); } };
+}
+
+/* ===== session d'entraînement ===== */
+let session = null;
+function buildDaily() {
+  const due = dueSkills().map(x => x.id); const weak = weakSkills().map(x => x.id);
+  const plan = [];
+  due.slice(0, 4).forEach(id => plan.push(id));
+  const focus = weak.slice(0, 3);
+  focus.forEach(id => { plan.push(id, id, id); });
+  const p1 = SKILLS.filter(x => x.part === 1).map(x => x.id), p2 = SKILLS.filter(x => x.part === 2).map(x => x.id);
+  while (plan.length < 12) { const pool = plan.filter(id => p1.includes(id)).length <= plan.filter(id => p2.includes(id)).length ? p1 : p2; plan.push(pick(weak.filter(id => pool.includes(id)).length ? weak.filter(id => pool.includes(id)) : pool)); }
+  return shuffle(plan.slice(0, 12));
+}
+function startSession(mode, skillId) {
+  const plan = mode === "daily" ? buildDaily() : Array(8).fill(skillId);
+  session = { active: true, mode, plan, pos: 0, total: plan.length, done: 0, okFirst: 0, answered: 0, gained: 0, retry: false, results: [] };
+  screen = "question"; $$(".tab").forEach(t => t.classList.toggle("active", t.dataset.go === (mode === "daily" ? "home" : "train")));
+  nextQuestion();
+}
+function nextQuestion() {
+  if (session.pos >= session.plan.length) { endSession(); return; }
+  const id = session.plan[session.pos]; const c = sk(id);
+  const q = generate(id, c.lvl);
+  q.isRetry = session.retryAt === session.pos; session.retryAt = null;
+  renderQuestion(q, { onAnswer: (ok) => afterTrainAnswer(q, ok), head: trainHead() });
+}
+function trainHead() { const pct = Math.round(session.done / session.total * 100); return `<div class="qhead"><button class="btn ghost sm" data-act="quit" aria-label="Quitter">✕</button><div class="bar grow"><i style="width:${pct}%"></i></div><span class="small muted num">${session.done}/${session.total}</span></div>`; }
+function afterTrainAnswer(q, ok) {
+  const c = sk(q.skill); c.seen++;
+  let xp = 0;
+  if (ok) {
+    if (!q.isRetry) { c.ok++; c.row++; session.okFirst++; if (c.row >= ROW_NEEDED && c.lvl < 4) { c.lvl++; c.row = 0; if (c.lvl === 4) { c.due = Date.now() + REVIEW_DAYS[1] * 86400000; setTimeout(() => toast("★ " + skillById(q.skill).name + " : maîtrisé !"), 500); } else setTimeout(() => toast("Niveau " + c.lvl + " en " + skillById(q.skill).name.toLowerCase()), 500); } else if (c.lvl === 4) { c.due = Date.now() + REVIEW_DAYS[Math.min(4, 2 + (c.rev || 0))] * 86400000; c.rev = (c.rev || 0) + 1; } xp = q.type === "num" || q.type === "signs" || q.type === "blank" || q.type === "order" || q.type === "build" ? 15 : 10; }
+    else { xp = 5; }
+    session.done++; session.gained += xp; addXp(xp);
+  } else {
+    if (!q.isRetry) { c.ko++; c.row = 0; if (c.lvl > 0) c.lvl--; if (c.lvl < 4) c.rev = 0; }
+    // la même compétence revient 2 questions plus loin
+    const at = Math.min(session.plan.length, session.pos + 3); session.plan.splice(at, 0, q.skill); session.retryAt = at;
+  }
+  if (!q.isRetry) session.answered++;
+  session.results.push({ skill: q.skill, ok, retry: q.isRetry });
+  session.pos++; save();
+}
+function confirmQuit(then) {
+  const view = $("#view"); if ($("#quitBox", view)) return false;
+  const fb = document.createElement("div"); fb.className = "card confirm"; fb.id = "quitBox"; fb.style.marginBottom = "10px";
+  fb.innerHTML = `Arrêter la session ? Ce qui est déjà répondu est enregistré.<div class="row"><button class="btn sm danger" id="qy">Arrêter</button><button class="btn sm" id="qn">Continuer</button></div>`;
+  view.prepend(fb); window.scrollTo(0, 0);
+  $("#qy").onclick = () => { session.active = false; session = null; then(); };
+  $("#qn").onclick = () => fb.remove();
+  return false;
+}
+function endSession() {
+  session.active = false;
+  const total = session.answered, okFirst = session.okFirst;
+  const missed = [...new Set(session.results.filter(r => !r.ok && !r.retry).map(r => r.skill))];
+  const bonus = 30; addXp(bonus, true); session.gained += bonus;
+  S.sessions++; touchStreak(); save(); renderPills(); checkBadges();
+  const perfect = okFirst === total; if (perfect) confetti();
+  const mode = session.mode, skillId = session.plan[0], gained = session.gained; session = null;
+  $("#view").innerHTML = `<div class="stack">
+    <div class="card" style="text-align:center"><div style="font-size:54px">${perfect ? "🏆" : okFirst / total >= .7 ? "💪" : "📚"}</div><h2>${perfect ? "Sans faute !" : okFirst / total >= .7 ? "Belle session !" : "Ça rentre, continue !"}</h2>
+      <p class="muted" style="margin-top:6px"><b class="num">${okFirst}</b> / ${total} du premier coup · <b class="num">+${gained} XP</b></p><p class="small muted" style="margin-top:6px">Série 🔥 ${S.streak.count} jour${S.streak.count > 1 ? "s" : ""}</p></div>
+    ${missed.length ? `<div class="card"><h3>À retravailler</h3><div class="chips" style="margin-top:10px">${missed.map(id => `<button class="chip ko" data-skill="${id}">${esc(skillById(id).name)}</button>`).join("")}</div><p class="small muted" style="margin-top:8px">Touche une compétence pour la retravailler, ou relis la leçon.</p></div>` : ""}
+    <button class="btn primary block" id="again">${mode === "daily" ? "Encore un parcours ⚡" : "Encore 8 questions ⚡"}</button>
+    <button class="btn block" id="homeb">Retour à l'accueil</button></div>`;
+  $("#again").onclick = () => mode === "daily" ? startSession("daily") : startSession("skill", skillId);
+  $("#homeb").onclick = () => go("home");
+  $$("[data-skill]").forEach(b => b.onclick = () => startSession("skill", b.dataset.skill));
+}
+
+/* ===== rendu d'une question (commun entraînement / contrôle) ===== */
+// opts: {head, onAnswer(ok, userAnswer), silent (contrôle : pas de correction), onNext}
+function renderQuestion(q, opts) {
+  const view = $("#view"); const skill = skillById(q.skill);
+  const tag = `<span class="skilltag ${skill.part === 2 ? "geo" : ""}">${esc(skill.name)}</span>`;
+  let body = "";
+  if (q.type === "num") body = `<div class="answerbox" id="abox"><span class="label">Réponse</span><input id="ans" type="text" inputmode="none" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Réponse"></div>
+    <div class="keypad">${["7", "8", "9", "⌫", "4", "5", "6", "−", "1", "2", "3", "OK", "0", ",", "C"].map(k => `<button type="button" class="key ${k === "OK" ? "ok" : k === "⌫" || k === "C" ? "del" : k === "−" || k === "," ? "op" : ""}" data-key="${k}">${k}</button>`).join("")}</div>`;
+  else if (q.type === "mcq") body = `<div class="opts ${q.options.length === 2 ? "two" : ""}">${q.options.map((o, i) => `<button type="button" class="opt ${q.options.length === 2 ? "big" : ""}" data-opt="${i}">${o.t}</button>`).join("")}</div>${opts.silent ? `<button type="button" class="btn primary block" data-act="validate" style="margin-top:12px" disabled>Valider</button>` : ""}`;
+  else if (q.type === "signs") body = `<div class="signs">${q.terms.map((t, i) => (i === 0 ? "" : `<button type="button" class="sg" data-sg="${i - 1}" aria-label="signe">?</button>`) + `<span class="term">${esc(t)}</span>`).join("")}</div><p class="small muted" style="margin-bottom:10px">Touche chaque case pour choisir + ou −.</p><button type="button" class="btn primary block" data-act="validate" disabled>Valider</button>`;
+  else if (q.type === "blank") body = `<div class="bank">${q.words.map((w, i) => `<button type="button" class="word" data-word="${i}">${esc(w)}</button>`).join("")}</div><button type="button" class="btn primary block" data-act="validate" disabled>Valider</button>`;
+  else if (q.type === "order") body = `<div class="olist" id="chosen"></div><div class="olist" id="pool">${q.lines.map((l, i) => `<button type="button" class="oline pool" data-line="${i}"><span class="k">·</span><span>${esc(l)}</span></button>`).join("")}</div><button type="button" class="btn primary block" data-act="validate" disabled>Valider</button>`;
+  else if (q.type === "build") body = q.steps.map((st, si) => `<div class="label" style="margin:${si ? 14 : 0}px 0 8px">${esc(st.label)}</div><div class="opts">${st.options.map((o, i) => `<button type="button" class="opt" data-step="${si}" data-opt="${i}">${o.t}</button>`).join("")}</div>`).join("") + `<button type="button" class="btn primary block" data-act="validate" style="margin-top:12px" disabled>Valider</button>`;
+  if (opts.silent) body += `<button type="button" class="btn ghost block" data-act="skip" style="margin-top:8px">Je ne sais pas, passer ›</button>`;
+  view.innerHTML = `<div class="stack">${opts.head || ""}<div class="qcard" id="qcard"><div class="row between">${tag}${opts.counter || ""}</div><div class="prompt">${q.type === "num" && !/class="expr"/.test(q.prompt) && !/[a-zA-Z]/.test(q.prompt.replace(/<[^>]+>/g, "")) ? `<span class="expr">${q.prompt}</span>` : q.prompt}</div>${q.fig ? fig(q.fig) : ""}${body}<div id="fb"></div></div></div>`;
+  const qc = $("#qcard", view); let answered = false;
+  const user = { signs: Array(q.type === "signs" ? q.terms.length - 1 : 0).fill(null), blanks: Array(q.type === "blank" ? q.answer.length : 0).fill(null), order: [], build: Array(q.type === "build" ? q.steps.length : 0).fill(null), mcq: null };
+  let activeBlank = 0;
+  const vbtn = () => $("[data-act=validate]", view);
+  const refreshBlanks = () => { $$(".blank", view).forEach((b, i) => { b.textContent = user.blanks[i] || "…"; b.classList.toggle("set", !!user.blanks[i]); b.classList.toggle("active", i === activeBlank); }); $$(".word", view).forEach((w, i) => w.classList.toggle("used", user.blanks.includes(q.words[i]))); if (vbtn()) vbtn().disabled = user.blanks.some(x => !x); };
+  const refreshOrder = () => { $("#chosen", view).innerHTML = user.order.map((idx, k) => `<button type="button" class="oline" data-chosen="${k}"><span class="k">${k + 1}</span><span>${esc(q.lines[idx])}</span></button>`).join("") + (user.order.length < q.lines.length ? `<div class="oslot">Touche la ligne qui vient ensuite…</div>` : ""); $$("[data-line]", view).forEach(b => b.hidden = user.order.includes(+b.dataset.line)); if (vbtn()) vbtn().disabled = user.order.length !== q.lines.length; };
+  if (q.type === "blank") refreshBlanks();
+  if (q.type === "order") refreshOrder();
+  if (q.type === "num") { const inp = $("#ans", view); inp.focus(); inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submit(inp.value); } }); }
+
+  function submit(userAnswer) {
+    if (answered) return; answered = true;
+    const ok = checkAnswer(q, userAnswer);
+    // marquage visuel
+    if (q.type === "num") { $("#abox", view).classList.add(ok ? "ok" : "ko"); $("#ans", view).disabled = true; $$(".key", view).forEach(k => k.disabled = true); }
+    if (q.type === "mcq") $$(".opt", view).forEach((o, i) => { if (q.options[i].ok) o.classList.add("ok"); else if (i === userAnswer) o.classList.add("ko"); else o.classList.add("dim"); o.disabled = true; });
+    if (q.type === "signs") $$(".sg", view).forEach((b, i) => { b.classList.add(user.signs[i] === q.answer[i] ? "ok" : "ko"); b.textContent = q.answer[i]; b.disabled = true; });
+    if (q.type === "blank") { $$(".blank", view).forEach((b, i) => { b.classList.remove("active"); b.classList.add(user.blanks[i] === q.answer[i] ? "ok" : "ko"); if (user.blanks[i] !== q.answer[i]) b.textContent = user.blanks[i] + " → " + q.answer[i]; }); $$(".word", view).forEach(w => w.disabled = true); }
+    if (q.type === "order") { $$("[data-chosen]", view).forEach((b, k) => { b.classList.add(q.lines[user.order[k]] === q.answer[k] ? "ok" : "ko"); b.disabled = true; }); }
+    if (q.type === "build") $$(".opt", view).forEach(o => { const si = +o.dataset.step, i = +o.dataset.opt; if (q.steps[si].options[i].ok) o.classList.add("ok"); else if (user.build[si] === i) o.classList.add("ko"); else o.classList.add("dim"); o.disabled = true; });
+    if (vbtn()) vbtn().hidden = true; const sk_ = $("[data-act=skip]", view); if (sk_) sk_.hidden = true;
+    if (opts.silent) { opts.onAnswer(ok, userAnswer); return; }
+    qc.classList.add(ok ? "good" : "bad"); beep(ok);
+    opts.onAnswer(ok, userAnswer);
+    const fb = $("#fb", view);
+    fb.innerHTML = `<div class="feedback ${ok ? "ok" : "ko"}"><div class="big">${ok ? pick(["Exact !", "Bien joué !", "Parfait !", "Yes !", "Nickel !"]) : "Pas tout à fait…"}</div>${ok ? "" : `<div class="small">La bonne réponse : <b>${q.type === "order" ? "voir ci-dessous" : correctText(q)}</b>. Lis l'explication, une question du même type revient dans 3 questions.</div>`}
+      <div class="explain">${q.explain}</div>
+      <button type="button" class="btn ${ok ? "primary" : "pop"} block" data-act="next" style="margin-top:12px">${ok ? "Suivant ›" : "J'ai compris, suivant ›"}</button></div>`;
+    $("[data-act=next]", fb).focus();
+    if (ok) setTimeout(() => { const n = $("[data-act=next]", view); if (n && screen === "question") n.click(); }, 1600);
+    fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+
+  view.onclick = e => {
+    const quit = e.target.closest("[data-act=quit]"); if (quit) { if (opts.onQuit) opts.onQuit(); else confirmQuit(() => go("home")); return; }
+    const next = e.target.closest("[data-act=next]"); if (next) { next.disabled = true; opts.onNext ? opts.onNext() : nextQuestion(); return; }
+    if (answered) return;
+    const key = e.target.closest("[data-key]"); if (key) { const inp = $("#ans", view); const k = key.dataset.key; if (k === "OK") submit(inp.value); else if (k === "⌫") inp.value = inp.value.slice(0, -1); else if (k === "C") inp.value = ""; else if (k === "−") inp.value = inp.value.startsWith("−") ? inp.value.slice(1) : "−" + inp.value; else if (k === ",") { if (!inp.value.includes(",") && inp.value.replace("−", "").length) inp.value += ","; } else inp.value += k; return; }
+    const o = e.target.closest("[data-opt]");
+    if (o && q.type === "mcq") { if (!opts.silent) { submit(+o.dataset.opt); return; } user.mcq = +o.dataset.opt; $$(".opt", view).forEach(x => x.classList.toggle("sel", +x.dataset.opt === user.mcq)); vbtn().disabled = false; return; }
+    const skip = e.target.closest("[data-act=skip]"); if (skip) { submit(q.type === "num" ? "" : q.type === "mcq" ? -1 : []); return; }
+    if (o && q.type === "build") { const si = +o.dataset.step; user.build[si] = +o.dataset.opt; $$(`.opt[data-step="${si}"]`, view).forEach(x => x.classList.toggle("sel", +x.dataset.opt === user.build[si])); vbtn().disabled = user.build.some(x => x === null); return; }
+    const sg = e.target.closest("[data-sg]"); if (sg) { const i = +sg.dataset.sg; user.signs[i] = user.signs[i] === "+" ? "−" : "+"; sg.textContent = user.signs[i]; sg.classList.add("set"); vbtn().disabled = user.signs.some(x => !x); return; }
+    const bl = e.target.closest(".blank"); if (bl) { activeBlank = +bl.dataset.i; if (user.blanks[activeBlank]) user.blanks[activeBlank] = null; refreshBlanks(); return; }
+    const w = e.target.closest("[data-word]"); if (w) { const word = q.words[+w.dataset.word]; if (activeBlank === null || activeBlank >= user.blanks.length) activeBlank = user.blanks.findIndex(x => !x); if (activeBlank < 0) return; user.blanks[activeBlank] = word; const nxt = user.blanks.findIndex(x => !x); activeBlank = nxt; refreshBlanks(); return; }
+    const ln = e.target.closest("[data-line]"); if (ln) { user.order.push(+ln.dataset.line); refreshOrder(); return; }
+    const ch = e.target.closest("[data-chosen]"); if (ch) { user.order.splice(+ch.dataset.chosen); refreshOrder(); return; }
+    const val = e.target.closest("[data-act=validate]"); if (val) { if (q.type === "mcq") submit(user.mcq); else if (q.type === "signs") submit(user.signs.slice()); else if (q.type === "blank") submit(user.blanks.slice()); else if (q.type === "order") submit(user.order.map(i => q.lines[i])); else if (q.type === "build") submit(user.build.slice()); }
+  };
+}
+
+/* ===== contrôle blanc ===== */
+let test = null;
+function renderTestStart() {
+  const hist = S.tests.slice(-8).reverse();
+  $("#view").innerHTML = `<div class="stack">
+    <div><h2>Contrôle blanc</h2><p class="small muted">Comme le vrai : <b>partie 1</b> nombres relatifs (10 points), <b>partie 2</b> géométrie (10 points). 20 questions, une par une, sans correction avant la fin. Le chrono tourne mais rien ne t'oblige à te presser.</p></div>
+    <div class="card"><div class="label">Conseils</div><ul class="small muted" style="margin:6px 0 0;padding-left:18px"><li>Écris les nombres avec une virgule : −3,5</li><li>Relis l'énoncé, repère les signes avant de calculer.</li><li>En géométrie, identifie toujours : données → propriété → conclusion.</li></ul></div>
+    <button class="btn pop block" id="startTest" style="font-size:18px">Commencer le contrôle 📝</button>
+    ${hist.length ? `<div class="card"><h3>Tes derniers contrôles</h3><div class="hist" style="margin-top:10px">${hist.map(t => `<div class="h ${t.score >= 16 ? "good" : t.score < 10 ? "bad" : ""}"><b>${t.score}/20</b><span>${esc(t.day.slice(8, 10) + "/" + t.day.slice(5, 7))}</span></div>`).join("")}</div></div>` : ""}
+  </div>`;
+  $("#startTest").onclick = startTest;
+}
+function startTest() {
+  test = { qs: E.buildTest(), i: 0, startedAt: Date.now(), answers: [] };
+  screen = "question"; nextTestQuestion();
+}
+function nextTestQuestion() {
+  if (test.i >= test.qs.length) { gradeTest(); return; }
+  const q = test.qs[test.i]; const n = test.i + 1;
+  const head = `<div class="qhead"><button class="btn ghost sm" data-act="quit" aria-label="Abandonner">✕</button><div class="bar grow"><i style="width:${Math.round(test.i / test.qs.length * 100)}%"></i></div><span class="small muted num" id="timer">0:00</span></div><div class="label">${q.part === 1 ? "Partie 1 · Nombres relatifs" : "Partie 2 · Géométrie"} · question ${n}/20</div>`;
+  renderQuestion(q, { head, silent: true, onAnswer: (ok, ua) => { test.answers.push({ ok, ua }); test.i++; setTimeout(nextTestQuestion, 250); }, onQuit: () => { const view = $("#view"); if ($("#quitBox", view)) return; const fb = document.createElement("div"); fb.className = "card confirm"; fb.id = "quitBox"; fb.innerHTML = `Abandonner le contrôle ? Il ne sera pas noté.<div class="row"><button class="btn sm danger" id="qy">Abandonner</button><button class="btn sm" id="qn">Continuer</button></div>`; view.prepend(fb); window.scrollTo(0, 0); $("#qy").onclick = () => { test = null; go("test"); }; $("#qn").onclick = () => fb.remove(); } });
+  const t0 = test.startedAt; const tick = () => { const el = $("#timer"); if (!el || !test) return; const s = Math.floor((Date.now() - t0) / 1000); el.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); setTimeout(tick, 1000); }; tick();
+}
+function gradeTest() {
+  const qs = test.qs, ans = test.answers;
+  let p1 = 0, p2 = 0; const wrongSkills = new Set();
+  qs.forEach((q, i) => { if (ans[i].ok) { if (q.part === 1) p1 += q.pts; else p2 += q.pts; const c = sk(q.skill); c.ok++; } else { wrongSkills.add(q.skill); const c = sk(q.skill); c.ko++; c.row = 0; if (c.lvl > 1) c.lvl = Math.min(c.lvl, 2); } });
+  const score = p1 + p2; const secs = Math.floor((Date.now() - test.startedAt) / 1000);
+  S.tests.push({ day: todayStr(), score, p1, p2, secs, wrong: [...wrongSkills] });
+  const xp = score * 5 + (score === 20 ? 100 : score >= 16 ? 40 : 0); addXp(xp, true);
+  touchStreak(); save(); renderPills(); checkBadges();
+  screen = "test"; $$(".tab").forEach(t => t.classList.toggle("active", t.dataset.go === "test"));
+  const msg = score === 20 ? "Sans faute, tu es prêt pour le vrai ! 🏆" : score >= 16 ? "Très bien ! Encore un peu de travail sur les rouges et c'est 20/20." : score >= 10 ? "Correct, mais ça peut monter. Les compétences ratées reviennent en priorité dans le parcours du jour." : "Pas encore au point. Relis les leçons, puis entraîne les compétences ratées une par une.";
+  $("#view").innerHTML = `<div class="stack">
+    <div class="card"><div class="score"><div class="big num">${score}<small>/20</small></div><div class="muted">Partie 1 : <b class="num">${p1}/10</b> · Partie 2 : <b class="num">${p2}/10</b> · ${Math.floor(secs / 60)} min ${secs % 60} s · +${xp} XP</div><p style="margin-top:8px;text-align:center">${msg}</p></div></div>
+    ${wrongSkills.size ? `<div class="card"><h3>À retravailler</h3><div class="chips" style="margin-top:10px">${[...wrongSkills].map(id => `<button class="chip ko" data-skill="${id}">${esc(skillById(id).name)}</button>`).join("")}</div></div>` : ""}
+    <div class="card"><h3 style="margin-bottom:10px">Correction</h3><div class="corr">${qs.map((q, i) => `<div class="c ${ans[i].ok ? "" : "ko"}"><div class="q"><span class="muted num">${i + 1}.</span> ${q.type === "blank" ? q.prompt.replace(/<button class="blank" data-i="(\d+)"[^>]*>…<\/button>/g, (m, k) => `<b>${esc(q.answer[+k])}</b>`) : q.prompt}</div><div class="small">${ans[i].ok ? "✔ Juste" : "✘ Faux"}${q.type === "num" && !ans[i].ok ? " · ta réponse : " + esc(ans[i].ua || "(vide)") + " · attendu : <b>" + fmt(q.answer) + "</b>" : ""}</div>${ans[i].ok ? "" : `<div class="explain" style="margin-top:6px">${q.explain}</div>`}</div>`).join("")}</div></div>
+    <button class="btn block" id="homeb">Retour à l'accueil</button></div>`;
+  if (score === 20) confetti(); beep(score >= 16);
+  test = null;
+  $("#homeb").onclick = () => go("home");
+  $$("[data-skill]").forEach(b => b.onclick = () => startSession("skill", b.dataset.skill));
+}
+
+/* ===== boot ===== */
+renderPills();
+go("home");
+if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navigator.serviceWorker.register("./sw.js").catch(() => { }); }); }
+</script>
+</body>
+</html>
